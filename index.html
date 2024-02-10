@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div id="images">
+
+    </div>
+</body>
+<script>
+    const courseDisplay = document.querySelector("#images");
+    const btn = document.querySelector("#btn")
+
+    // const {jsPDF} = jspdf;
+    // var doc = new jsPDF()
+    
+    const fetchImage = async()=>{
+        const response = await fetch("http://localhost:8000/images")
+        const data = await response.json();
+
+        const arr = await data.urlsl;
+        return arr;
+    }
+
+    const arr = fetchImage()
+    arr.then(res=>res.map((url)=>{
+        const title = `<img src="` + url.url + `" height="200px" width="380px" /><br/>`;
+            courseDisplay.insertAdjacentHTML("beforeend", title)
+            
+            // doc.addImage(url.url,"png",10,10,190,0);
+            // doc.addPage();
+    }))
+            // doc.save('image.pdf')
+</script> 
+</html>
